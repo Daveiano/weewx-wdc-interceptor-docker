@@ -6,8 +6,8 @@ ENV WEEWX_HOME="/home/weewx"
 
 EXPOSE 9877
 
-COPY install-input.txt /tmp/
-COPY start.sh /start.sh
+COPY src/install-input.txt /tmp/
+COPY src/start.sh /start.sh
 RUN chmod +x /start.sh
 
 # @see https://blog.nuvotex.de/running-syslog-in-a-container/
@@ -25,7 +25,6 @@ RUN tar xvfz "weewx-${WEEWX_VERSION}.tar.gz"
 
 WORKDIR /tmp/weewx-${WEEWX_VERSION}
 
-# @todo Get requirements from repo.
 RUN pip install --no-cache-dir -r ./requirements.txt
 RUN python ./setup.py build && python ./setup.py install < /tmp/install-input.txt
 
@@ -35,5 +34,8 @@ RUN bin/wee_extension --install /tmp/weewx-interceptor.zip
 RUN bin/wee_config --reconfigure --driver=user.interceptor --no-prompt
 
 RUN sed -i -e 's/device_type = acurite-bridge/device_type = ecowitt-client\n    port = 9877\n    address = 0.0.0.0/g' weewx.conf
+
+VOLUME [ "${WEEWX_HOME}/public_html" ]
+VOLUME [ "${WEEWX_HOME}/archive" ]
 
 CMD "/start.sh"
