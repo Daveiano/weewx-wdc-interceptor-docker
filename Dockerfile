@@ -19,14 +19,14 @@ RUN addgroup --system --gid ${WEEWX_UID} weewx \
 
 WORKDIR /tmp
 
-RUN wget -O "weewx-${WEEWX_VERSION}.tar.gz" "https://www.weewx.com/downloads/released_versions/weewx-${WEEWX_VERSION}.tar.gz"
+RUN wget -O "weewx-${WEEWX_VERSION}.tar.gz" "https://github.com/weewx/weewx/archive/refs/tags/v${WEEWX_VERSION}.tar.gz" 
 RUN wget -O "weewx-interceptor.zip" "https://github.com/matthewwall/weewx-interceptor/archive/master.zip"
 RUN tar xvfz "weewx-${WEEWX_VERSION}.tar.gz"
 
 WORKDIR /tmp/weewx-${WEEWX_VERSION}
 
 # @todo Get requirements from repo.
-RUN pip install --no-cache-dir configobj pyserial Cheetah3 Pillow
+RUN pip install --no-cache-dir -r ./requirements.txt
 RUN python ./setup.py build && python ./setup.py install < /tmp/install-input.txt
 
 WORKDIR ${WEEWX_HOME}
