@@ -1,6 +1,10 @@
 # weewx-interceptor-docker
 
+A simple Dockerfile to run [weewx](https://github.com/weewx/weewx) with the [interceptor](https://github.com/matthewwall/weewx-interceptor) driver.
+
 ## Usage
+
+Docs are in /var/log/syslog.
 
 * Make changes to src/install-input.txt
 * Build `docker build . -t "weewx"`
@@ -15,8 +19,14 @@ docker volume create weewx-html
 docker run -d -p 9877:9877 --name weewx -v weewx-db:/home/weewx/archive -v weewx-html:/home/weewx/public_html weewx
 ```
 
+### docker compose
 
-## install-input.txt
+A simple docker-compose.yml is included which starts a nginx server on `localhost:8080`.
+
+`docker compose up -d`
+
+
+### install-input.txt
 
 The template for the weewx configuration manager:
 
@@ -29,9 +39,9 @@ The template for the weewx configuration manager:
 | y                             | Register station    |
 | https://weewx.ddev.site/      | Station Link        |
 | metric                        | unit display        |
-| 3                             | Driver              |
+| 3 (is set to interceptor during installation) | Driver              |
 
-### Here is the install output with the full dialogue:
+#### Here is the install output with the full dialogue:
 
 ```
 Enter a brief description of the station, such as its location.  For example:
@@ -66,3 +76,7 @@ Installed drivers include:
  12) WS28xx          (weewx.drivers.ws28xx)    
 choose a driver [3]:
 ```
+
+## Credits and further reading
+
+https://www.dl1nux.de/erfahrungen-mit-dnt-wetterstation-weatherscreen-pro-und-weewx/
