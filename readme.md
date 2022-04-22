@@ -94,6 +94,8 @@ Sync the generated html reports to a S3 bucket for web hosting.
 
 The volume path for a named volume should normaly be something like `/var/lib/docker/volumes/weewx-db/_data`.
 
+For more information about AWS S3 static website hosting, see here https://docs.aws.amazon.com/AmazonS3/latest/userguide/website-hosting-custom-domain-walkthrough.html#root-domain-walkthrough-create-buckets
+
 Usage: `./admin_scripts/sync-s3.sh <LOCAL FILE PATH> <S3 BUCKET AND PATH>`
 
 Example: `"./admin_scripts/sync-s3.sh /var/lib/docker/volumes/weewx-db/_data weewx_web/"`
