@@ -88,6 +88,16 @@ Usage: `./admin_scripts/backup.sh <VOLUME> <OUTPUT_DIRECTORY>`
 
 Example: `"./admin_scripts/backup.sh weewx-db ./exports"`
 
+### sync-s3.sh
+
+Sync the generated html reports to a S3 bucket for web hosting.
+
+The volume path for a named volume should normaly be something like `/var/lib/docker/volumes/weewx-db/_data`.
+
+Usage: `./admin_scripts/sync-s3.sh <LOCAL FILE PATH> <S3 BUCKET AND PATH>`
+
+Example: `"./admin_scripts/sync-s3.sh /var/lib/docker/volumes/weewx-db/_data weewx_web/"`
+
 ## Credits and further reading
 
 https://www.dl1nux.de/erfahrungen-mit-dnt-wetterstation-weatherscreen-pro-und-weewx/

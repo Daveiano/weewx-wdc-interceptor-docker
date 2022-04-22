@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Parameters
+# $1 - The named volume name.
+# $2 - The desired output directory.
+
 # see https://www.reddit.com/r/docker/comments/f8uwnl/comment/fio5ll8/?utm_source=share&utm_medium=web2x&context=3
 if [[ $# -lt 2 ]] ; then
     echo "Wrong number of arguments!"
