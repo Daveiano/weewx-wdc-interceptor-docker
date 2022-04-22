@@ -7,6 +7,6 @@ rm -f /run/rsyslogd.pid
 # start service
 service rsyslog start
 
-# start rspamd
+# start weewx
 echo 'Starting weewx'
 ${WEEWX_HOME}/bin/weewxd

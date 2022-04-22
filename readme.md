@@ -77,6 +77,17 @@ Installed drivers include:
 choose a driver [3]:
 ```
 
+## Admin scripts
+
+### backup.sh
+
+Saves a backup of a named volume to the desired location. This can be run via cron to backup the SQLite DB.
+The backup file has a date suffix.
+
+Usage: `./admin_scripts/backup.sh <VOLUME> <OUTPUT_DIRECTORY>`
+
+Example: `"./admin_scripts/backup.sh weewx-db ./exports"`
+
 ## Credits and further reading
 
 https://www.dl1nux.de/erfahrungen-mit-dnt-wetterstation-weatherscreen-pro-und-weewx/
