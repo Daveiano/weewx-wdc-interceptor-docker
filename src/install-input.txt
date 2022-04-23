@@ -3,6 +3,6 @@ Haselbachtal, Saxony, Germany
 51.209
 14.085
 y
-https://weewx.ddev.site/
+https://www.weewx-hbt.de/
 metric
 3

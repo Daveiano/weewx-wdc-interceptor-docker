@@ -19,6 +19,8 @@ docker volume create weewx-html
 docker run -d -p 9877:9877 --name weewx -v weewx-db:/home/weewx/archive -v weewx-html:/home/weewx/public_html weewx
 ```
 
+Run nginx with weewx generated files: `docker run -it --rm -d -p 8080:80 --name web -v weewx-html:/usr/share/nginx/html nginx`
+
 ### docker compose
 
 A simple docker-compose.yml is included which starts a nginx server on `localhost:8080`.
