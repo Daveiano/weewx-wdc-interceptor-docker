@@ -28,7 +28,7 @@ A simple docker-compose.yml is included which starts a nginx server on `localhos
 
 ### install-input.txt
 
-The template for the weewx configuration manager:
+The template for the weewx install manager:
 
 | Value in txt                  | weewx Spec          |
 |-------------------------------|---------------------|
@@ -82,21 +82,21 @@ choose a driver [3]:
 ### backup.sh
 
 Saves a backup of a named volume to the desired location. This can be run via cron to backup the SQLite DB.
-The backup file has a date suffix.
+The backup file has a date suffix. Optionaly you can add a third paramter with the Cloudfront Distribution ID to trigger an Invalidation.
 
-Usage: `./admin_scripts/backup.sh <VOLUME> <OUTPUT_DIRECTORY>`
+Usage: `./admin_scripts/backup.sh <VOLUME> <OUTPUT_DIRECTORY> <OPTIONAL CF DISTRIBUTION ID>`
 
 Example: `"./admin_scripts/backup.sh weewx-db ./exports"`
 
 ### sync-s3.sh
 
-Sync the generated html reports to a S3 bucket for web hosting.
+Sync the generated html reports to a S3 bucket for web hosting. This needs the [aws cli](LINK) installed and configured.
 
-The volume path for a named volume should normaly be something like `/var/lib/docker/volumes/weewx-db/_data`.
+The volume path for a named volume should normaly be something like `/var/lib/docker/volumes/weewx-html/_data`.
 
 Usage: `./admin_scripts/sync-s3.sh <LOCAL FILE PATH> <S3 BUCKET AND PATH>`
 
-Example: `"./admin_scripts/sync-s3.sh /var/lib/docker/volumes/weewx-db/_data weewx_web/"`
+Example: `"./admin_scripts/sync-s3.sh /var/lib/docker/volumes/weewx-html/_data weewx_web/"`
 
 ## Credits and further reading
 

@@ -13,6 +13,7 @@ if [[ $# -lt 2 ]] ; then
 fi
 
 # Stop weewx service, see https://weewx.com/docs/usersguide.htm#Database
+# @todo make container-name variable a parameter.
 docker stop weewx
 
 now=$(date +"%m_%d_%Y_%H_%M")

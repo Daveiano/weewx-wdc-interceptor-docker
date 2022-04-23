@@ -17,10 +17,14 @@ RUN apt-get update &&\
 RUN addgroup --system --gid ${WEEWX_UID} weewx &&\
     adduser --system --uid ${WEEWX_UID} --ingroup weewx weewx
 
+# Configure timezone.
+RUN ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
+
 WORKDIR /tmp
 
 RUN wget -O "weewx-${WEEWX_VERSION}.tar.gz" "https://github.com/weewx/weewx/archive/refs/tags/v${WEEWX_VERSION}.tar.gz" &&\
     wget -O "weewx-interceptor.zip" "https://github.com/matthewwall/weewx-interceptor/archive/master.zip" &&\
+    wget -O "weewx-neowx-skin.zip" "https://neoground.com/projects/neowx-material/download/latest" &&\
     tar xvfz "weewx-${WEEWX_VERSION}.tar.gz"
 
 WORKDIR /tmp/weewx-${WEEWX_VERSION}
@@ -31,9 +35,14 @@ RUN pip install --no-cache-dir -r ./requirements.txt &&\
 WORKDIR ${WEEWX_HOME}
 
 RUN bin/wee_extension --install /tmp/weewx-interceptor.zip &&\
+    bin/wee_extension --install /tmp/weewx-neowx-skin.zip &&\
     bin/wee_config --reconfigure --driver=user.interceptor --no-prompt
 
 RUN sed -i -e 's/device_type = acurite-bridge/device_type = ecowitt-client\n    port = 9877\n    address = 0.0.0.0/g' weewx.conf
+
+# Enable neowx-material skin.
+#    sed -i -z -e 's/skin = Standard\n        enable = false/skin = neowx-material\n        enable = true/g' weewx.conf &&\
+#    sed -i -z -e 's/skin = Seasons\n        enable = true/skin = Seasons\n        enable = false/g' weewx.conf
 
 VOLUME [ "${WEEWX_HOME}/public_html" ]
 VOLUME [ "${WEEWX_HOME}/archive" ]
