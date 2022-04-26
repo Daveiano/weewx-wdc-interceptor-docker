@@ -1,0 +1,34 @@
+user:
+  weewx:
+    exists: true
+    uid: 2749
+    home: /home/weewx
+
+group:
+  weewx:
+    exists: true
+    gid: 2749
+
+service:
+  rsyslog:
+    enabled: true
+    running: true
+
+process:
+  weewxd:
+    running: true
+
+port:
+  tcp:9877:
+    listening: true
+    ip:
+    - 0.0.0.0
+
+file: 
+  /home/weewx/weewx.conf:
+    exists: true    
+    contains:
+      - /device_type = ecowitt-client/
+      - /port = 9877/
+      - /address = 0.0.0.0/
+    

@@ -102,6 +102,12 @@ Usage: `./admin_scripts/sync-s3.sh <LOCAL FILE PATH> <S3 BUCKET AND PATH>`
 
 Example: `"./admin_scripts/sync-s3.sh /var/lib/docker/volumes/weewx-html/_data weewx_web/"`
 
+## Test
+
+The Dockerfile is tested using [dgoss](https://github.com/aelsabbahy/goss/tree/master/extras/dgoss):
+
+`dgoss run -p 9877:9877  weewx`
+
 ## Credits and further reading
 
 https://www.dl1nux.de/erfahrungen-mit-dnt-wetterstation-weatherscreen-pro-und-weewx/

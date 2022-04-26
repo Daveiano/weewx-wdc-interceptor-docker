@@ -1,0 +1,36 @@
+name: Test & Lint
+
+on:
+  push:
+    branches: [1.x]
+  pull_request:
+    branches: [1.x]
+
+jobs:
+  shellcheck:
+    name: Shellcheck
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run ShellCheck
+      uses: ludeeus/action-shellcheck@master
+  hadolint:
+    name: hadolint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run hadolint
+        uses: hadolint/hadolint-action@v2.0.0
+        with:
+          dockerfile: Dockerfile
+          verbose: true
+  dgoss:
+    name: dgoss
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: e1himself/goss-installation-action@v1.0.3
+        with:
+        version: 'v0.3.16'
+      - name: Run dgoss tests
+        run: export GOSS_FILES_STRATEGY=cp && dgoss run -p 9877:9877  weewx
