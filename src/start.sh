@@ -9,4 +9,4 @@ service rsyslog start
 
 # start weewx
 echo 'Starting weewx'
-${WEEWX_HOME}/bin/weewxd
+"${WEEWX_HOME}"/bin/weewxd

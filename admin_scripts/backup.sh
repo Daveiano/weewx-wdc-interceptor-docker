@@ -19,7 +19,7 @@ docker stop weewx
 now=$(date +"%m_%d_%Y_%H_%M")
 
 # Backup weewx.sdb from volume, see https://jareklipski.medium.com/backup-restore-docker-named-volumes-350397b8e362.
-docker run --rm -v $1:/volume -v /$2:/backup alpine tar -cjf /backup/$1_$now.tar.bz2 -C /volume ./
+docker run --rm -v "$1":/volume -v /"$2":/backup alpine tar -cjf /backup/"$1"_"$now".tar.bz2 -C /volume ./
 
 # Restart weewx.
 docker start weewx

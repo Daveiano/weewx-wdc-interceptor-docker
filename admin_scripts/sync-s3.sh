@@ -12,8 +12,8 @@ if [[ $# -lt 2 ]] ; then
     exit 1
 fi
 
-aws s3 sync $1 s3://$2 --delete
+aws s3 sync "$1" s3://"$2" --delete
 
 if [[ $# -gt 2 ]] ; then
-  aws cloudfront create-invalidation --distribution-id $3 --paths '/*'
+  aws cloudfront create-invalidation --distribution-id "$3" --paths '/*'
 fi

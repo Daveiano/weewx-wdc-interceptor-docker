@@ -1,0 +1,7 @@
+{
+    "recommendations": [
+        "exiasr.hadolint",
+        "timonwong.shellcheck",
+        "ms-azuretools.vscode-docker"
+    ]
+}
