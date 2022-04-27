@@ -33,5 +33,9 @@ jobs:
         with:
           version: 'v0.3.16'
       - run: docker build . -t "weewx"    
+      - run: which goss
       - name: Run dgoss tests
-        run: export GOSS_FILES_STRATEGY=cp && dgoss run -p 9877:9877  weewx
+        run: >
+          export GOSS_FILES_STRATEGY=cp && 
+          export GOSS_PATH="/opt/hostedtoolcache/goss/0.3.16/amd64/goss" && 
+          sudo -E /opt/hostedtoolcache/dgoss/0.3.16/amd64/dgoss run -p 9877:9877 weewx
