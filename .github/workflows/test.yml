@@ -32,10 +32,10 @@ jobs:
       - uses: e1himself/goss-installation-action@v1.0.3
         with:
           version: 'v0.3.16'
-      - run: docker build . -t "weewx"    
-      - run: docker run -p 9877:9877 weewx
+      - run: docker build . -t "weewx"
       - name: Run dgoss tests
         run: >
           export GOSS_FILES_STRATEGY=cp && 
           export GOSS_PATH="/opt/hostedtoolcache/goss/0.3.16/amd64/goss" && 
+          export GOSS_SLEEP=1.0 &&
           sudo -E /opt/hostedtoolcache/dgoss/0.3.16/amd64/dgoss run -p 9877:9877 weewx
