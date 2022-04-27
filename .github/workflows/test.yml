@@ -33,7 +33,7 @@ jobs:
         with:
           version: 'v0.3.16'
       - run: docker build . -t "weewx"    
-      - run: which goss
+      - run: docker run -p 9877:9877 weewx
       - name: Run dgoss tests
         run: >
           export GOSS_FILES_STRATEGY=cp && 
