@@ -3,6 +3,7 @@
 # Parameters
 # $1 - The named volume name.
 # $2 - The desired output directory.
+# $3 - Optional S3 Bucket to save backup file to.
 
 # see https://www.reddit.com/r/docker/comments/f8uwnl/comment/fio5ll8/?utm_source=share&utm_medium=web2x&context=3
 if [[ $# -lt 2 ]] ; then
@@ -23,3 +24,8 @@ docker run --rm -v "$1":/volume -v /"$2":/backup alpine tar -cjf /backup/"$1"_"$
 
 # Restart weewx.
 docker start weewx
+
+if [[ $# -gt 2 ]] ; then
+  aws s3 cp "$2"/"$1"_"$now".tar.bz2 s3://"$3"/"$1"_"$now".tar.bz2
+  rm -f "$2"/"$1"_"$now".tar.bz2
+fi
