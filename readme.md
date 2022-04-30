@@ -84,7 +84,7 @@ choose a driver [3]:
 ### backup.sh
 
 Saves a backup of a named volume to the desired location. This can be run via cron to backup the SQLite DB.
-The backup file has a date suffix. Optionaly you can add a S3 Bucket and path as a third paramter to copy the backup to S3.
+The backup file has a date suffix. Optionally, you can add a S3 Bucket and path as a third parameter to copy the backup to S3.
 The local backup gets removed in this case.
 
 Usage: `./admin_scripts/backup.sh <VOLUME> <OUTPUT_DIRECTORY> <OPTIONAL S3 BUCKET AND PATH>`
@@ -93,15 +93,25 @@ Example: `"./admin_scripts/backup.sh weewx-db ./exports weewx-backup-bucket s3-b
 
 ### sync-s3.sh
 
-Sync the generated html reports to a S3 bucket for web hosting. This needs the [aws cli](LINK) installed and configured.
-The volume path for a named volume should normaly be something like `/var/lib/docker/volumes/weewx-html/_data`.
-Optionaly you can add a third paramter with the Cloudfront Distribution ID to trigger an Invalidation.
+Sync the generated HTML reports to a S3 bucket for web hosting. This needs the [aws cli](LINK) installed and configured.
+The volume path for a named volume should normally be something like `/var/lib/docker/volumes/weewx-html/_data`.
+Optionally you can add a third parameter with the Cloudfront Distribution ID to trigger an Invalidation.
 
 For more information about AWS S3 static website hosting, see here https://docs.aws.amazon.com/AmazonS3/latest/userguide/website-hosting-custom-domain-walkthrough.html#root-domain-walkthrough-create-buckets
 
 Usage: `./admin_scripts/sync-s3.sh <LOCAL FILE PATH> <S3 BUCKET AND PATH> <OPTIONAL CF DISTRIBUTION ID>`
 
 Example: `"./admin_scripts/sync-s3.sh /var/lib/docker/volumes/weewx-html/_data weewx_web/"`
+
+###
+
+I am using these two scripts as cronjobs on my PI installation:
+
+```
+# m h  dom mon dow   command
+*/10 * * * * PATH=/usr/bin:/usr/local/bin && /home/pi/weewx-interceptor-docker/admin_scripts/sync-s3.sh /var/lib/docker/volumes/weewx-html/_data www.weewx-hbt.de/ E3J11K1FGUODP7
+0 8 * * * PATH=/usr/bin:/usr/local/bin && /home/pi/weewx-interceptor-docker/admin_scripts/backup.sh weewx-db /tmp weewx-backup-sdb
+```
 
 ## Test
 
