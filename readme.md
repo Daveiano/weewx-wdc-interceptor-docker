@@ -39,7 +39,7 @@ The template for the weewx install manager:
 | 51.209                        | latitude            |
 | 14.085                        | longitude           |
 | y                             | Register station    |
-| https://weewx.ddev.site/      | Station Link        |
+| https://www.weewx-hbt.de/     | Station Link        |
 | metric                        | unit display        |
 | 3 (is set to interceptor during installation) | Driver              |
 
