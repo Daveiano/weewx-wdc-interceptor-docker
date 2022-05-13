@@ -24,11 +24,12 @@ port:
     ip:
     - 0.0.0.0
 
-file: 
+file:
   /home/weewx/weewx.conf:
-    exists: true    
+    exists: true
     contains:
       - /device_type = ecowitt-client/
       - /port = 9877/
       - /address = 0.0.0.0/
-    
+      - /WdcReport/
+      - /skin = weewx-wdc/
