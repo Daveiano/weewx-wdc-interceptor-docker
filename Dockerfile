@@ -28,11 +28,11 @@ WORKDIR /tmp
 
 RUN wget -nv -O "weewx-${WEEWX_VERSION}.tar.gz" "https://github.com/weewx/weewx/archive/refs/tags/v${WEEWX_VERSION}.tar.gz" &&\
     wget -nv -O "weewx-interceptor.zip" "https://github.com/matthewwall/weewx-interceptor/archive/master.zip" &&\
-    wget -nv -O "weewx-wdc-v1.0.0-beta3.zip" "https://github.com/Daveiano/weewx-wdc/releases/download/v1.0.0-beta3/weewx-wdc-v1.0.0-beta3.zip" &&\
+    wget -nv -O "weewx-wdc-v1.0.0-beta4.zip" "https://github.com/Daveiano/weewx-wdc/releases/download/v1.0.0-beta4/weewx-wdc-v1.0.0-beta4.zip" &&\
     tar xvfz "weewx-${WEEWX_VERSION}.tar.gz"
 
 RUN mkdir /tmp/weewx-wdc/ &&\
-    unzip /tmp/weewx-wdc-v1.0.0-beta3.zip -d /tmp/weewx-wdc/
+    unzip /tmp/weewx-wdc-v1.0.0-beta4.zip -d /tmp/weewx-wdc/
 
 WORKDIR /tmp/weewx-${WEEWX_VERSION}
 
