@@ -3,11 +3,11 @@ version: "3.7"
 services:
   weewx-python:
     build: .
-    ports: 
+    ports:
       - 9877:9877
     volumes:
       - weewx-db:/home/weewx/archive
-      - weewx-html:/home/weewx/public_html  
+      - weewx-html:/home/weewx/public_html
   weewx-web:
     image: nginx:latest
     ports:

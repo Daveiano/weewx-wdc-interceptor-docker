@@ -48,36 +48,41 @@ The template for the weewx install manager:
 ```
 Enter a brief description of the station, such as its location.  For example:
 Santa's Workshop, North Pole
-description [My Little Town, Oregon]: 
+description [My Little Town, Oregon]:
 Specify altitude, with units 'foot' or 'meter'.  For example:
 35, foot
 12, meter
-altitude [700, foot]: 
+altitude [700, foot]:
 Specify latitude in decimal degrees, negative for south.
 latitude [0.00]: Specify longitude in decimal degrees, negative for west.
-longitude [0.00]: 
+longitude [0.00]:
 You can register your station on weewx.com, where it will be included
 in a map. You will need a unique URL to identify your station (such as a
 website, or WeatherUnderground link).
-Include station in the station registry (y/n)? [n]: Unique URL: [http://acme.com]: 
+Include station in the station registry (y/n)? [n]: Unique URL: [http://acme.com]:
 Indicate the preferred units for display: ['us', 'metric', 'metricwx']
-unit system [us]: 
+unit system [us]:
 Installed drivers include:
-  0) AcuRite         (weewx.drivers.acurite)   
-  1) CC3000          (weewx.drivers.cc3000)    
-  2) FineOffsetUSB   (weewx.drivers.fousb)     
-  3) Simulator       (weewx.drivers.simulator) 
-  4) TE923           (weewx.drivers.te923)     
-  5) Ultimeter       (weewx.drivers.ultimeter) 
-  6) Vantage         (weewx.drivers.vantage)   
-  7) WMR100          (weewx.drivers.wmr100)    
-  8) WMR300          (weewx.drivers.wmr300)    
-  9) WMR9x8          (weewx.drivers.wmr9x8)    
- 10) WS1             (weewx.drivers.ws1)       
- 11) WS23xx          (weewx.drivers.ws23xx)    
- 12) WS28xx          (weewx.drivers.ws28xx)    
+  0) AcuRite         (weewx.drivers.acurite)
+  1) CC3000          (weewx.drivers.cc3000)
+  2) FineOffsetUSB   (weewx.drivers.fousb)
+  3) Simulator       (weewx.drivers.simulator)
+  4) TE923           (weewx.drivers.te923)
+  5) Ultimeter       (weewx.drivers.ultimeter)
+  6) Vantage         (weewx.drivers.vantage)
+  7) WMR100          (weewx.drivers.wmr100)
+  8) WMR300          (weewx.drivers.wmr300)
+  9) WMR9x8          (weewx.drivers.wmr9x8)
+ 10) WS1             (weewx.drivers.ws1)
+ 11) WS23xx          (weewx.drivers.ws23xx)
+ 12) WS28xx          (weewx.drivers.ws28xx)
 choose a driver [3]:
 ```
+
+### [Weather Data Center Skin](https://github.com/Daveiano/weewx-wdc) or any other skin
+
+Comment the lines 31 and 49 in the Dockerfile to deactivate the weewx-wdc skin. Or replace the download and file name
+with your own skin you want to install.
 
 ## Admin scripts
 
