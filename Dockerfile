@@ -3,6 +3,7 @@ FROM python:3.10-buster
 LABEL org.opencontainers.image.authors="David Baetge <david.baetge@gmail.com>"
 
 ARG WEEWX_VERSION="4.7.0"
+ARG WDC_VERSION="v1.0.0-beta5"
 ARG WEEWX_UID=2749
 ENV WEEWX_HOME="/home/weewx"
 
@@ -28,11 +29,11 @@ WORKDIR /tmp
 
 RUN wget -nv -O "weewx-${WEEWX_VERSION}.tar.gz" "https://github.com/weewx/weewx/archive/refs/tags/v${WEEWX_VERSION}.tar.gz" &&\
     wget -nv -O "weewx-interceptor.zip" "https://github.com/matthewwall/weewx-interceptor/archive/master.zip" &&\
-    wget -nv -O "weewx-wdc-v1.0.0-beta4.zip" "https://github.com/Daveiano/weewx-wdc/releases/download/v1.0.0-beta4/weewx-wdc-v1.0.0-beta4.zip" &&\
+    wget -nv -O "weewx-wdc-${WDC_VERSION}.zip" "https://github.com/Daveiano/weewx-wdc/releases/download/${WDC_VERSION}/weewx-wdc-${WDC_VERSION}.zip" &&\
     tar xvfz "weewx-${WEEWX_VERSION}.tar.gz"
 
 RUN mkdir /tmp/weewx-wdc/ &&\
-    unzip /tmp/weewx-wdc-v1.0.0-beta4.zip -d /tmp/weewx-wdc/
+    unzip /tmp/weewx-wdc-${WDC_VERSION}.zip -d /tmp/weewx-wdc/
 
 WORKDIR /tmp/weewx-${WEEWX_VERSION}
 
