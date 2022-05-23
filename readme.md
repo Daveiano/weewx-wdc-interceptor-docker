@@ -4,12 +4,12 @@ A simple Dockerfile to run [weewx](https://github.com/weewx/weewx) with the [int
 
 ## Usage
 
-Docs are in /var/log/syslog.
-
 * Make changes to src/install-input.txt
 * Build `docker build . -t "weewx"`
 * Run `docker run -d -p 9877:9877 --name weewx weewx`
 * Step into with `docker exec -it weewx /bin/bash`
+
+Logs are in /var/log/syslog.
 
 ### Working with named volumes
 
@@ -20,6 +20,8 @@ docker run -d -p 9877:9877 --name weewx -v weewx-db:/home/weewx/archive -v weewx
 ```
 
 Run nginx with weewx generated files: `docker run -it --rm -d -p 8080:80 --name web -v weewx-html:/usr/share/nginx/html nginx`
+
+`docker run -d --cpu-shares 4000 --cpus 2 -p 9877:9877 --name weewx -v weewx-db:/home/weewx/archive -v weewx-html:/home/weewx/public_html weewx`
 
 ### docker compose
 
