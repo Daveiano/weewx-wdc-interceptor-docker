@@ -1,6 +1,7 @@
 # weewx-interceptor-docker
 
 A simple Dockerfile to run [weewx](https://github.com/weewx/weewx) with the [interceptor](https://github.com/matthewwall/weewx-interceptor) driver.
+The [weewx-forecast](https://github.com/chaunceygardiner/weewx-forecast/) extension is also installed.
 
 ## Usage
 

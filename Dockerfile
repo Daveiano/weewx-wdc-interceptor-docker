@@ -3,7 +3,7 @@ FROM python:3.10-buster
 LABEL org.opencontainers.image.authors="David Baetge <david.baetge@gmail.com>"
 
 ARG WEEWX_VERSION="4.8.0"
-ARG WDC_VERSION="v1.1.0"
+ARG WDC_VERSION="v1.2.0"
 ARG WEEWX_UID=2749
 ENV WEEWX_HOME="/home/weewx"
 
@@ -47,6 +47,8 @@ RUN bin/wee_extension --install /tmp/weewx-interceptor.zip &&\
     bin/wee_extension --install /tmp/weewx-forecast.zip &&\
     bin/wee_extension --install /tmp/weewx-wdc/ &&\
     bin/wee_config --reconfigure --driver=user.interceptor --no-prompt
+
+COPY src/skin.conf ./skins/weewx-wdc/
 
 RUN sed -i -e 's/device_type = acurite-bridge/device_type = ecowitt-client\n    port = 9877\n    address = 0.0.0.0/g' weewx.conf &&\
     sed -i -z -e 's/skin = Seasons\n        enable = true/skin = Seasons\n        enable = false/g' weewx.conf
