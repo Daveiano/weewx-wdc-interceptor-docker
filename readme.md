@@ -84,7 +84,7 @@ choose a driver [3]:
 
 ### [Weather Data Center Skin](https://github.com/Daveiano/weewx-wdc) or any other skin
 
-Comment the lines 31 and 49 in the Dockerfile to deactivate the weewx-wdc skin. Or replace the download and file name
+Comment the lines 32 and 48 in the Dockerfile to deactivate the weewx-wdc skin. Or replace the download and file name
 with your own skin you want to install.
 
 ## Admin scripts
