@@ -51,7 +51,8 @@ RUN bin/wee_extension --install /tmp/weewx-interceptor.zip &&\
 COPY src/skin.conf ./skins/weewx-wdc/
 
 RUN sed -i -e 's/device_type = acurite-bridge/device_type = ecowitt-client\n    port = 9877\n    address = 0.0.0.0/g' weewx.conf &&\
-    sed -i -z -e 's/skin = Seasons\n        enable = true/skin = Seasons\n        enable = false/g' weewx.conf
+    sed -i -z -e 's/skin = Seasons\n        enable = true/skin = Seasons\n        enable = false/g' weewx.conf &&\
+    sed -i -z -e 's/skin = forecast/skin = forecast\n        enable = false/g' weewx.conf
 
 VOLUME [ "${WEEWX_HOME}/public_html" ]
 VOLUME [ "${WEEWX_HOME}/archive" ]

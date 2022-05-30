@@ -7,6 +7,9 @@ The [weewx-forecast](https://github.com/chaunceygardiner/weewx-forecast/) extens
 
 * Make changes to src/install-input.txt
 * Build `docker build . -t "weewx"`
+  * Default build args:
+    * **ARG** WEEWX_VERSION="4.8.0"
+    * **ARG** WDC_VERSION="v1.2.1"
 * Run `docker run -d -p 9877:9877 --name weewx weewx`
 * Step into with `docker exec -it weewx /bin/bash`
 
