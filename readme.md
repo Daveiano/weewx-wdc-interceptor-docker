@@ -1,4 +1,6 @@
-# weewx-interceptor-docker
+[![Test & Lint](https://github.com/Daveiano/weewx-wdc-interceptor-docker/actions/workflows/test.yml/badge.svg?branch=1.x)](https://github.com/Daveiano/weewx-wdc-interceptor-docker/actions/workflows/test.yml)
+
+# weewx-wdc-interceptor-docker
 
 A simple Dockerfile to run [weewx](https://github.com/weewx/weewx) with the [interceptor](https://github.com/matthewwall/weewx-interceptor) driver.
 The [weewx-forecast](https://github.com/chaunceygardiner/weewx-forecast/) extension is also installed along with [weewx-wdc](https://github.com/Daveiano/weewx-wdc).

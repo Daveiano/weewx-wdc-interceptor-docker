@@ -9,4 +9,5 @@ if [[ $# -lt 1 ]] ; then
   exit 1
 fi
 
-aws cloudfront create-invalidation --distribution-id "$1" --paths "/*"
+aws cloudfront create-invalidation --distribution-id "$1"\
+    --paths "/*.html" "/NOAA/*.txt"
