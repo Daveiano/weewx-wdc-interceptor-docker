@@ -16,7 +16,7 @@ RUN chmod +x /start.sh
 
 # @see https://blog.nuvotex.de/running-syslog-in-a-container/
 RUN apt-get update &&\
-    apt-get install -q -y --no-install-recommends rsyslog=8.1901.0-1+deb10u2 python3-configobj python3-requests &&\
+    apt-get install -q -y --no-install-recommends rsyslog=8.1901.0-1+deb10u2 python3-configobj=5.0.6-3 python3-requests=2.21.0-1 &&\
     apt-get clean &&\
     rm -rf /var/lib/apt/lists/*
 
