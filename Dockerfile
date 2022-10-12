@@ -46,11 +46,13 @@ RUN mkdir /tmp/weewx-dwd/ &&\
     sed -i -z -e "s|PTH=\"/etc/weewx/skins/Belchertown/dwd\"|PTH=\"/home/weewx/skins/weewx-wdc/dwd\"|g" /usr/local/bin/wget-dwd &&\
     sed -i -z -e "s|config = configobj.ConfigObj(\"/etc/weewx/weewx.conf\")|config = configobj.ConfigObj(\"/home/weewx/weewx.conf\")|g" /usr/local/bin/dwd-warnings
 
-# Icons TODO CARBON ICONS
+# Icons
 RUN wget -nv -O "icons-dwd.zip" "https://www.dwd.de/DE/wetter/warnungen_aktuell/objekt_einbindung/icons/wettericons_zip.zip?__blob=publicationFile&v=3" &&\
     wget -nv -O "warnicons-dwd.zip" "https://www.dwd.de/DE/wetter/warnungen_aktuell/objekt_einbindung/icons/warnicons_nach_stufen_50x50_zip.zip?__blob=publicationFile&v=2" &&\
+    wget -nv -O "icons-carbon.zip" "https://public-images-social.s3.eu-west-1.amazonaws.com/weewx-wdc-carbon-icons.zip" &&\
     mkdir -p /home/weewx/public_html/dwd/icons && mkdir -p /home/weewx/public_html/dwd/warn_icons &&\
     unzip /tmp/icons-dwd.zip -d /home/weewx/public_html/dwd/icons &&\
+    unzip /tmp/icons-carbon.zip -d /home/weewx/public_html/dwd/icons &&\
     unzip /tmp/warnicons-dwd.zip -d /home/weewx/public_html/dwd/warn_icons
 
 WORKDIR /tmp/weewx-${WEEWX_VERSION}
