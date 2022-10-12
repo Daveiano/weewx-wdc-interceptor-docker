@@ -34,5 +34,5 @@ jobs:
         run: >
           export GOSS_FILES_STRATEGY=cp &&
           export GOSS_PATH="/opt/hostedtoolcache/goss/0.3.16/amd64/goss" &&
-          export GOSS_SLEEP=10.0 &&
+          export GOSS_SLEEP=1.0 &&
           sudo -E /opt/hostedtoolcache/dgoss/0.3.16/amd64/dgoss run -p 9877:9877 weewx
