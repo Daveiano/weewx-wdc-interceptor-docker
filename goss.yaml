@@ -13,6 +13,9 @@ service:
   rsyslog:
     enabled: true
     running: true
+  cron:
+    enabled: true
+    running: true
 
 process:
   weewxd:

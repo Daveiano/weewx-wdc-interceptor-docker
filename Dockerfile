@@ -16,7 +16,7 @@ RUN chmod +x /start.sh
 
 # @see https://blog.nuvotex.de/running-syslog-in-a-container/
 RUN apt-get update &&\
-    apt-get install -q -y --no-install-recommends rsyslog=8.1901.0-1+deb10u2 python3-configobj=5.0.6-3 python3-requests=2.21.0-1 &&\
+    apt-get install -q -y --no-install-recommends rsyslog=8.1901.0-1+deb10u2 cron=3.0pl1-134+deb10u1 python3-configobj=5.0.6-3 python3-requests=2.21.0-1 &&\
     apt-get clean &&\
     rm -rf /var/lib/apt/lists/*
 
@@ -44,7 +44,9 @@ RUN mkdir /tmp/weewx-dwd/ &&\
     cp -R /tmp/weewx-dwd/weewx-DWD-master/usr/ / &&\
     cp -R /tmp/weewx-dwd/weewx-DWD-master/etc/ / &&\
     sed -i -z -e "s|PTH=\"/etc/weewx/skins/Belchertown/dwd\"|PTH=\"/home/weewx/skins/weewx-wdc/dwd\"|g" /usr/local/bin/wget-dwd &&\
-    sed -i -z -e "s|config = configobj.ConfigObj(\"/etc/weewx/weewx.conf\")|config = configobj.ConfigObj(\"/home/weewx/weewx.conf\")|g" /usr/local/bin/dwd-warnings
+    sed -i -z -e "s|config = configobj.ConfigObj(\"/etc/weewx/weewx.conf\")|config = configobj.ConfigObj(\"/home/weewx/weewx.conf\")|g" /usr/local/bin/dwd-warnings &&\
+    sed -i -z -e "s|#/usr/local/bin/dwd-cap-warnings --weewx --resolution=city 2>/dev/null >/dev/null|/usr/local/bin/dwd-cap-warnings --weewx --resolution=city 2>/dev/null >/dev/null|g" /etc/cron.hourly/dwd &&\
+    sed -i -z -e "s|#/usr/local/bin/dwd-mosmix --weewx --daily --hourly XXXXX 2>/dev/null >/dev/null|/usr/local/bin/dwd-mosmix --weewx --daily --hourly O461 2>/dev/null >/dev/null|g" /etc/cron.hourly/dwd
 
 # Icons
 RUN wget -nv -O "icons-dwd.zip" "https://www.dwd.de/DE/wetter/warnungen_aktuell/objekt_einbindung/icons/wettericons_zip.zip?__blob=publicationFile&v=3" &&\

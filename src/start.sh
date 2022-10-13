@@ -4,8 +4,9 @@
 echo 'Starting rsyslog'
 # remove lingering pid file
 rm -f /run/rsyslogd.pid
-# start service
+# start services
 service rsyslog start
+service cron start
 
 # Initial weewx-DWD run.
 mkdir /home/weewx/skins/weewx-wdc/dwd
