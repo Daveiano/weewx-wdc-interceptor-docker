@@ -1,10 +1,7 @@
 name: Test & Lint
 
 on:
-  push:
-    branches: [1.x]
-  pull_request:
-    branches: [1.x]
+  [push, pull_request]
 
 jobs:
   shellcheck:
@@ -35,7 +32,7 @@ jobs:
       - run: docker build . -t "weewx"
       - name: Run dgoss tests
         run: >
-          export GOSS_FILES_STRATEGY=cp && 
-          export GOSS_PATH="/opt/hostedtoolcache/goss/0.3.16/amd64/goss" && 
+          export GOSS_FILES_STRATEGY=cp &&
+          export GOSS_PATH="/opt/hostedtoolcache/goss/0.3.16/amd64/goss" &&
           export GOSS_SLEEP=1.0 &&
           sudo -E /opt/hostedtoolcache/dgoss/0.3.16/amd64/dgoss run -p 9877:9877 weewx
