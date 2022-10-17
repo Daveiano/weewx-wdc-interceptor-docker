@@ -36,3 +36,4 @@ file:
       - /address = 0.0.0.0/
       - /WdcReport/
       - /skin = weewx-wdc/
+      - /[DeutscherWetterdienst]/
