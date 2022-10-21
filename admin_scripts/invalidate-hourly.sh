@@ -10,4 +10,4 @@ if [[ $# -lt 1 ]] ; then
 fi
 
 aws cloudfront create-invalidation --distribution-id "$1"\
-    --paths "/month*" "/year*" "/week.html"
+    --paths "/yesterday.html" "/week.html" "/month.html" "/year.html"
