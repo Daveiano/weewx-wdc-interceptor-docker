@@ -15,5 +15,5 @@ fi
 aws s3 sync "$1" s3://"$2" --delete
 
 if [[ $# -gt 2 ]] ; then
-  aws cloudfront create-invalidation --distribution-id "$3" --paths "/index.html"
+  aws cloudfront create-invalidation --distribution-id "$3" --paths "/*"
 fi

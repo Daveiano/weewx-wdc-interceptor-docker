@@ -107,7 +107,6 @@ Example: `"./admin_scripts/backup.sh weewx-db ./exports weewx-backup-bucket s3-b
 Sync the generated HTML reports to a S3 bucket for web hosting. This needs the [aws cli](LINK) installed and configured.
 The volume path for a named volume should normally be something like `/var/lib/docker/volumes/weewx-html/_data`.
 Optionally you can add a third parameter with the Cloudfront Distribution ID to trigger an Invalidation for index.html.
-See invalidate-hourly.sh and invalidate-12hourly.sh for more invalidations.
 
 For more information about AWS S3 static website hosting, see here https://docs.aws.amazon.com/AmazonS3/latest/userguide/website-hosting-custom-domain-walkthrough.html#root-domain-walkthrough-create-buckets
 
@@ -121,9 +120,7 @@ I am using these two scripts as cronjobs on my PI installation:
 
 ```
 # m h  dom mon dow   command
-*/10 * * * * PATH=/usr/bin:/usr/local/bin && /home/pi/weewx-interceptor-docker/admin_scripts/sync-s3.sh /var/lib/docker/volumes/weewx-html/_data www.weewx-hbt.de/ E3J11K1FGUODP7
-0 * * * * PATH=/usr/bin:/usr/local/bin && /home/pi/weewx-interceptor-docker/admin_scripts/invalidate-hourly.sh E3J11K1FGUODP7
-0 */12 * * * PATH=/usr/bin:/usr/local/bin && /home/pi/weewx-interceptor-docker/admin_scripts/invalidate-12hourly.sh E3J11K1FGUODP7
+*/10 * * * * PATH=/usr/bin:/usr/local/bin && /home/pi/weewx-interceptor-docker/admin_scripts/sync-s3.sh /var/lib/docker/volumes/weewx-html/_data www.weewx-hbt.de/ XXXXXXXXXXXXXX
 0 8 * * * PATH=/usr/bin:/usr/local/bin && /home/pi/weewx-interceptor-docker/admin_scripts/backup.sh weewx-db /tmp weewx-backup-sdb
 ```
 
