@@ -8,6 +8,7 @@ services:
     volumes:
       - weewx-db:/home/weewx/archive
       - weewx-html:/home/weewx/public_html
+    restart: unless-stopped
   weewx-web:
     image: nginx:latest
     ports:

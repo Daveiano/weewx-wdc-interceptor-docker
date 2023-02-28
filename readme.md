@@ -10,9 +10,9 @@ The [weewx-forecast](https://github.com/chaunceygardiner/weewx-forecast/) extens
 * Make changes to src/install-input.txt
 * Build `docker build . -t "weewx"`
   * Default build args:
-    * **ARG** WEEWX_VERSION="4.8.0"
-    * **ARG** WDC_VERSION="v2.3.0"
-* Run `docker run -d -p 9877:9877 --name weewx weewx`
+    * **ARG** WEEWX_VERSION="4.10.2"
+    * **ARG** WDC_VERSION="v2.3.3"
+* Run `docker run -d --restart unless-stopped -p 9877:9877 --name weewx weewx`
 * Step into with `docker exec -it weewx /bin/bash`
 
 Logs are in /var/log/syslog.
@@ -22,7 +22,7 @@ Logs are in /var/log/syslog.
 ```
 docker volume create weewx-db
 docker volume create weewx-html
-docker run -d -p 9877:9877 --name weewx -v weewx-db:/home/weewx/archive -v weewx-html:/home/weewx/public_html weewx
+docker run -d --restart unless-stopped -p 9877:9877 --name weewx -v weewx-db:/home/weewx/archive -v weewx-html:/home/weewx/public_html weewx
 ```
 
 Run nginx with weewx generated files: `docker run -it --rm -d -p 8080:80 --name web -v weewx-html:/usr/share/nginx/html nginx`
@@ -113,8 +113,6 @@ For more information about AWS S3 static website hosting, see here https://docs.
 Usage: `./admin_scripts/sync-s3.sh <LOCAL FILE PATH> <S3 BUCKET AND PATH> <OPTIONAL CF DISTRIBUTION ID>`
 
 Example: `"./admin_scripts/sync-s3.sh /var/lib/docker/volumes/weewx-html/_data weewx_web/"`
-
-###
 
 I am using these two scripts as cronjobs on my PI installation:
 
