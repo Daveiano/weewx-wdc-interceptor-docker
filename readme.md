@@ -7,7 +7,7 @@ The [weewx-forecast](https://github.com/chaunceygardiner/weewx-forecast/) extens
 
 ## Usage
 
-* Make changes to src/install-input.txt
+* Make changes to src/install-input.txt and src/skin.conf
 * Build `docker build . -t "weewx"`
   * Default build args:
     * **ARG** WEEWX_VERSION="4.10.2"
