@@ -8,14 +8,14 @@ jobs:
     name: Shellcheck
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     - name: Run ShellCheck
       uses: ludeeus/action-shellcheck@master
   hadolint:
     name: hadolint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Run hadolint
         uses: hadolint/hadolint-action@v2.0.0
         with:
@@ -25,7 +25,7 @@ jobs:
     name: dgoss
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: e1himself/goss-installation-action@v1.0.3
         with:
           version: 'v0.3.16'
