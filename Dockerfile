@@ -15,7 +15,7 @@ RUN chmod +x /start.sh
 
 # @see https://blog.nuvotex.de/running-syslog-in-a-container/
 RUN apt-get update &&\
-    apt-get install -q -y --no-install-recommends rsyslog=8.1901.0-1+deb10u2 &&\
+    apt-get install -q -y --no-install-recommends rsyslog=8.1901.0-1+deb10u2 python3-paho-mqtt &&\
     apt-get clean &&\
     rm -rf /var/lib/apt/lists/*
 
@@ -31,6 +31,7 @@ RUN wget -nv -O "weewx-${WEEWX_VERSION}.tar.gz" "https://github.com/weewx/weewx/
     wget -nv -O "weewx-interceptor.zip" "https://github.com/matthewwall/weewx-interceptor/archive/master.zip" &&\
     wget -nv -O "weewx-wdc-${WDC_VERSION}.zip" "https://github.com/Daveiano/weewx-wdc/releases/download/${WDC_VERSION}/weewx-wdc-${WDC_VERSION}.zip" &&\
     wget -nv -O "weewx-forecast.zip" "https://github.com/chaunceygardiner/weewx-forecast/archive/refs/heads/master.zip" &&\
+    wget -nv -O "weewx-mqtt.zip" https://github.com/matthewwall/weewx-mqtt/archive/master.zip &&\
     tar xvfz "weewx-${WEEWX_VERSION}.tar.gz"
 
 RUN mkdir /tmp/weewx-wdc/ &&\
@@ -39,20 +40,29 @@ RUN mkdir /tmp/weewx-wdc/ &&\
 WORKDIR /tmp/weewx-${WEEWX_VERSION}
 
 RUN pip install --no-cache-dir -r ./requirements.txt &&\
+    pip install paho-mqtt &&\
     python ./setup.py build && python ./setup.py install < /tmp/install-input.txt
 
 WORKDIR ${WEEWX_HOME}
 
 RUN bin/wee_extension --install /tmp/weewx-interceptor.zip &&\
     bin/wee_extension --install /tmp/weewx-forecast.zip &&\
+    bin/wee_extension --install /tmp/weewx-mqtt.zip &&\
     bin/wee_extension --install /tmp/weewx-wdc/ &&\
-    bin/wee_config --reconfigure --driver=user.interceptor --no-prompt
+    bin/wee_config --reconfigure --driver=user.interceptor --no-prompt &&\
+    bin/wee_extension --list
 
 COPY src/skin.conf ./skins/weewx-wdc/
 
+# weewx-wdc.
 RUN sed -i -e 's/device_type = acurite-bridge/device_type = ecowitt-client\n    port = 9877\n    address = 0.0.0.0/g' weewx.conf &&\
     sed -i -z -e 's/skin = Seasons\n        enable = true/skin = Seasons\n        enable = false/g' weewx.conf &&\
     sed -i -z -e 's/skin = forecast/skin = forecast\n        enable = false/g' weewx.conf
+
+# weewx-mqtt.
+RUN sed -i -z -e 's|INSERT_SERVER_URL_HERE|mqtt://username:password@localhost:1883/\n        topic = weather\n        unit_system = METRIC|g' weewx.conf
+
+RUN cat weewx.conf
 
 VOLUME [ "${WEEWX_HOME}/public_html" ]
 VOLUME [ "${WEEWX_HOME}/archive" ]
