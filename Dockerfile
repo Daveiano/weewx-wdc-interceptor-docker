@@ -15,7 +15,7 @@ RUN chmod +x /start.sh
 
 # @see https://blog.nuvotex.de/running-syslog-in-a-container/
 RUN apt-get update &&\
-    apt-get install -q -y --no-install-recommends rsyslog=8.1901.0-1+deb10u2 python3-paho-mqtt &&\
+    apt-get install -q -y --no-install-recommends rsyslog=8.1901.0-1+deb10u2 python3-paho-mqtt=1.4.0-1 &&\
     apt-get clean &&\
     rm -rf /var/lib/apt/lists/*
 
@@ -40,7 +40,7 @@ RUN mkdir /tmp/weewx-wdc/ &&\
 WORKDIR /tmp/weewx-${WEEWX_VERSION}
 
 RUN pip install --no-cache-dir -r ./requirements.txt &&\
-    pip install paho-mqtt &&\
+    pip install --no-cache-dir paho-mqtt==1.6.1 &&\
     python ./setup.py build && python ./setup.py install < /tmp/install-input.txt
 
 WORKDIR ${WEEWX_HOME}
@@ -61,8 +61,6 @@ RUN sed -i -e 's/device_type = acurite-bridge/device_type = ecowitt-client\n    
 
 # weewx-mqtt.
 RUN sed -i -z -e 's|INSERT_SERVER_URL_HERE|mqtt://username:password@localhost:1883/\n        topic = weather\n        unit_system = METRIC|g' weewx.conf
-
-RUN cat weewx.conf
 
 VOLUME [ "${WEEWX_HOME}/public_html" ]
 VOLUME [ "${WEEWX_HOME}/archive" ]
