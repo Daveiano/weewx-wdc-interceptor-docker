@@ -60,7 +60,7 @@ RUN sed -i -e 's/device_type = acurite-bridge/device_type = ecowitt-client\n    
     sed -i -z -e 's/skin = forecast/skin = forecast\n        enable = false/g' weewx.conf
 
 # weewx-mqtt.
-RUN sed -i -z -e 's|INSERT_SERVER_URL_HERE|mqtt://username:password@localhost:1883/\n        topic = weather\n        unit_system = METRIC|g' weewx.conf
+RUN sed -i -z -e 's|INSERT_SERVER_URL_HERE|mqtt://user:password@host:port\n        topic = weather\n        unit_system = METRIC\n        binding = loop\n        [[[inputs]]]\n            [[[[windSpeed]]]]\n                format = %.0f\n            [[[[windGust]]]]\n                format = %.0f|g' weewx.conf
 
 VOLUME [ "${WEEWX_HOME}/public_html" ]
 VOLUME [ "${WEEWX_HOME}/archive" ]
