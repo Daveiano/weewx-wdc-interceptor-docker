@@ -37,3 +37,9 @@ file:
       - /WdcReport/
       - /skin = weewx-wdc/
       - /[DeutscherWetterdienst]/
+      - /dwd_binding/
+      - /dwd_sqlite/
+  /home/weewx/bin/schemas/dwd.py:
+    exists: true
+    contains:
+      - /dateTime/
