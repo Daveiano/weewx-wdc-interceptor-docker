@@ -12,6 +12,7 @@ EXPOSE 9877
 COPY src/install-input.txt /tmp/
 COPY src/start.sh /start.sh
 COPY src/weewx-dwd.conf /tmp/weewx-dwd.conf
+COPY src/dwd-extensions.py /tmp
 RUN chmod +x /start.sh
 
 # @see https://blog.nuvotex.de/running-syslog-in-a-container/
@@ -47,7 +48,7 @@ RUN mkdir /tmp/weewx-dwd/ &&\
     sed -i -z -e "s|PTH=\"/etc/weewx/skins/Belchertown/dwd\"|PTH=\"/home/weewx/skins/weewx-wdc/dwd\"|g" /usr/local/bin/wget-dwd &&\
     sed -i -z -e "s|config = configobj.ConfigObj(\"/etc/weewx/weewx.conf\")|config = configobj.ConfigObj(\"/home/weewx/weewx.conf\")|g" /usr/local/bin/dwd-warnings &&\
     sed -i -z -e "s|#/usr/local/bin/dwd-cap-warnings --weewx --resolution=city 2>/dev/null >/dev/null|/usr/local/bin/dwd-cap-warnings --weewx --resolution=city 2>/dev/null >/dev/null|g" /etc/cron.hourly/dwd &&\
-    sed -i -z -e "s|#/usr/local/bin/dwd-mosmix --weewx --daily --hourly XXXXX 2>/dev/null >/dev/null|/usr/local/bin/dwd-mosmix --weewx --daily --hourly O461 2>/dev/null >/dev/null|g" /etc/cron.hourly/dwd
+    sed -i -z -e "s|#/usr/local/bin/dwd-mosmix --weewx --daily --hourly XXXXX 2>/dev/null >/dev/null|/usr/local/bin/dwd-mosmix --weewx --daily --hourly --json --database O461 2>/dev/null >/dev/null|g" /etc/cron.hourly/dwd
 
 # Icons
 RUN wget -nv -O "icons-dwd.zip" "https://www.dwd.de/DE/wetter/warnungen_aktuell/objekt_einbindung/icons/wettericons_zip.zip?__blob=publicationFile&v=3" &&\
@@ -74,11 +75,15 @@ RUN bin/wee_extension --install /tmp/weewx-interceptor.zip &&\
     bin/wee_extension --list
 
 COPY src/skin.conf ./skins/weewx-wdc/
+COPY src/dwd.py ./bin/schemas/
 
 # weewx-wdc.
 RUN sed -i -e 's/device_type = acurite-bridge/device_type = ecowitt-client\n    port = 9877\n    address = 0.0.0.0/g' weewx.conf &&\
     sed -i -z -e 's/skin = Seasons\n        enable = true/skin = Seasons\n        enable = false/g' weewx.conf &&\
     sed -i -z -e 's/skin = forecast/skin = forecast\n        enable = false/g' weewx.conf &&\
+    sed -i '/schema = schemas.wview_extended.schema/a \[\[dwd_binding\]\]\n        database = dwd_sqlite\n        table_name = forecast\n        manager = weewx.manager.Manager\n        schema = schemas.dwd.schema\n' "${WEEWX_HOME}"/weewx.conf >/dev/null &&\
+    sed -i '/A SQLite database is simply a single file/a \[\[dwd_sqlite\]\]\n        database_name = dwd-forecast-O461.sdb\n        database_type = SQLite\n' "${WEEWX_HOME}"/weewx.conf >/dev/null &&\
+    cat /tmp/dwd-extensions.py >> "${WEEWX_HOME}"/bin/user/extensions.py &&\
     cat /tmp/weewx-dwd.conf >> weewx.conf
 
 # weewx-mqtt.
