@@ -11,7 +11,7 @@ The [weewx-forecast](https://github.com/chaunceygardiner/weewx-forecast/) extens
 * Build `docker build . -t "weewx"`
   * Default build args:
     * **ARG** WEEWX_VERSION="4.10.2"
-    * **ARG** WDC_VERSION="v3.1.1"
+    * **ARG** WDC_VERSION="v3.2.0"
 * Run `docker run -d --restart unless-stopped -p 9877:9877 --name weewx weewx`
 * Step into with `docker exec -it weewx /bin/bash`
 
