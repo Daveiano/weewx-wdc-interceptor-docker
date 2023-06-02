@@ -11,6 +11,7 @@ EXPOSE 9877
 
 COPY src/install-input.txt /tmp/
 COPY src/start.sh /start.sh
+COPY src/extensions.py /tmp
 RUN chmod +x /start.sh
 
 # @see https://blog.nuvotex.de/running-syslog-in-a-container/
@@ -31,6 +32,7 @@ RUN wget -nv -O "weewx-${WEEWX_VERSION}.tar.gz" "https://github.com/weewx/weewx/
     wget -nv -O "weewx-interceptor.zip" "https://github.com/matthewwall/weewx-interceptor/archive/master.zip" &&\
     wget -nv -O "weewx-wdc-${WDC_VERSION}.zip" "https://github.com/Daveiano/weewx-wdc/releases/download/${WDC_VERSION}/weewx-wdc-${WDC_VERSION}.zip" &&\
     wget -nv -O "weewx-forecast.zip" "https://github.com/chaunceygardiner/weewx-forecast/archive/refs/heads/master.zip" &&\
+    wget -nv -O "weewx-cmon.zip" "https://github.com/bellrichm/weewx-cmon/archive/refs/heads/master.zip" &&\
     tar xvfz "weewx-${WEEWX_VERSION}.tar.gz"
 
 RUN mkdir /tmp/weewx-wdc/ &&\
@@ -45,6 +47,7 @@ WORKDIR ${WEEWX_HOME}
 
 RUN bin/wee_extension --install /tmp/weewx-interceptor.zip &&\
     bin/wee_extension --install /tmp/weewx-forecast.zip &&\
+    bin/wee_extension --install /tmp/weewx-cmon.zip &&\
     bin/wee_extension --install /tmp/weewx-wdc/ &&\
     bin/wee_config --reconfigure --driver=user.interceptor --no-prompt
 
@@ -52,7 +55,8 @@ COPY src/skin.conf ./skins/weewx-wdc/
 
 RUN sed -i -e 's/device_type = acurite-bridge/device_type = ecowitt-client\n    port = 9877\n    address = 0.0.0.0/g' weewx.conf &&\
     sed -i -z -e 's/skin = Seasons\n        enable = true/skin = Seasons\n        enable = false/g' weewx.conf &&\
-    sed -i -z -e 's/skin = forecast/skin = forecast\n        enable = false/g' weewx.conf
+    sed -i -z -e 's/skin = forecast/skin = forecast\n        enable = false/g' weewx.conf &&\
+    cat /tmp/extensions.py >> "${WEEWX_HOME}"/bin/user/extensions.py
 
 VOLUME [ "${WEEWX_HOME}/public_html" ]
 VOLUME [ "${WEEWX_HOME}/archive" ]

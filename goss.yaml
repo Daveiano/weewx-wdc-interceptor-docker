@@ -33,3 +33,5 @@ file:
       - /address = 0.0.0.0/
       - /WdcReport/
       - /skin = weewx-wdc/
+
+# TODO: Test extensions.py
