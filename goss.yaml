@@ -34,4 +34,8 @@ file:
       - /WdcReport/
       - /skin = weewx-wdc/
 
-# TODO: Test extensions.py
+  /home/weewx/bin/user/extensions.py:
+    exists: true
+    contains:
+      - /import weewx.units/
+      - /weewx.units.obs_group_dict\[\'proc_active\'\] = \'group_count\'/
