@@ -39,7 +39,14 @@ file:
       - /[DeutscherWetterdienst]/
       - /dwd_binding/
       - /dwd_sqlite/
+
   /home/weewx/bin/schemas/dwd.py:
     exists: true
     contains:
       - /dateTime/
+
+  /home/weewx/bin/user/extensions.py:
+    exists: true
+    contains:
+      - /import weewx.units/
+      - /weewx.units.obs_group_dict\[\'proc_active\'\] = \'group_count\'/
