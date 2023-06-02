@@ -50,3 +50,4 @@ file:
     contains:
       - /import weewx.units/
       - /weewx.units.obs_group_dict\[\'proc_active\'\] = \'group_count\'/
+      - /weewx.units.obs_group_dict\[\'pop\'\] = \'group_percent\'/
