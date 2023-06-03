@@ -4,8 +4,7 @@
 
 A simple Dockerfile to run [weewx](https://github.com/weewx/weewx) with the [interceptor](https://github.com/matthewwall/weewx-interceptor) driver.
 The [weewx-forecast](https://github.com/chaunceygardiner/weewx-forecast/) extension is also installed along with [weewx-wdc](https://github.com/Daveiano/weewx-wdc)
-and [weewx-cmon](https://github.com/bellrichm/weewx-cmon). There are branches available with [weewx-DWD](https://github.com/roe-dl/weewx-DWD)
-and [weewx-mqtt](https://github.com/matthewwall/weewx-mqtt).
+and [weewx-cmon](https://github.com/bellrichm/weewx-cmon). There are branches available with [weewx-DWD](https://github.com/roe-dl/weewx-DWD), [weewx-mqtt](https://github.com/matthewwall/weewx-mqtt) and [weewx-xaggs](https://github.com/tkeffer/weewx-xaggs).
 
 ## Usage
 
