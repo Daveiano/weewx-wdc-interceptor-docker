@@ -35,6 +35,7 @@ RUN wget -nv -O "weewx-${WEEWX_VERSION}.tar.gz" "https://github.com/weewx/weewx/
     wget -nv -O "weewx-dwd.zip" "https://github.com/roe-dl/weewx-DWD/archive/refs/heads/master.zip" &&\
     wget -nv -O "weewx-forecast.zip" "https://github.com/chaunceygardiner/weewx-forecast/archive/refs/heads/master.zip" &&\
     wget -nv -O "weewx-cmon.zip" "https://github.com/bellrichm/weewx-cmon/archive/refs/heads/master.zip" &&\
+    wget -nv -O "weewx-xaggs.zip" "https://github.com/tkeffer/weewx-xaggs/archive/master.zip" &&\
     tar xvfz "weewx-${WEEWX_VERSION}.tar.gz"
 
 RUN mkdir /tmp/weewx-wdc/ &&\
@@ -69,6 +70,7 @@ WORKDIR ${WEEWX_HOME}
 RUN bin/wee_extension --install /tmp/weewx-interceptor.zip &&\
     bin/wee_extension --install /tmp/weewx-forecast.zip &&\
     bin/wee_extension --install /tmp/weewx-cmon.zip &&\
+    bin/wee_extension --install /tmp/weewx-xaggs.zip &&\
     bin/wee_extension --install /tmp/weewx-wdc/ &&\
     bin/wee_config --reconfigure --driver=user.interceptor --no-prompt
 
