@@ -29,7 +29,7 @@ weewx.units.obs_group_dict['cpu_temp2'] = 'group_temperature'
 weewx.units.obs_group_dict['cpu_temp3'] = 'group_temperature'
 weewx.units.obs_group_dict['cpu_temp4'] = 'group_temperature'
 
-weewx.units.obs_group_dict['net_eth0_rbytes'] = 'group_dat"""  """a'
+weewx.units.obs_group_dict['net_eth0_rbytes'] = 'group_data'
 weewx.units.obs_group_dict['net_eth0_rpackets'] = 'group_count'
 weewx.units.obs_group_dict['net_eth0_rerrs'] = 'group_count'
 weewx.units.obs_group_dict['net_eth0_rdrop'] = 'group_count'
