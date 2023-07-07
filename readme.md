@@ -12,7 +12,7 @@ and [weewx-cmon](https://github.com/bellrichm/weewx-cmon). There are branches av
 * Build `docker build . -t "weewx"`
   * Default build args:
     * **ARG** WEEWX_VERSION="4.10.2"
-    * **ARG** WDC_VERSION="v3.2.0"
+    * **ARG** WDC_VERSION="v3.3.0"
 * Run `docker run -d --restart unless-stopped -p 9877:9877 --name weewx weewx`
 * Step into with `docker exec -it weewx /bin/bash`
 
