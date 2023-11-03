@@ -3,7 +3,7 @@ FROM python:3.10-buster
 LABEL org.opencontainers.image.authors="David Baetge <david.baetge@gmail.com>"
 
 ARG WEEWX_VERSION="4.10.2"
-ARG WDC_VERSION="v3.3.0"
+ARG WDC_VERSION="v3.4.0"
 ARG WEEWX_UID=2749
 ENV WEEWX_HOME="/home/weewx"
 
@@ -36,6 +36,7 @@ RUN wget -nv -O "weewx-${WEEWX_VERSION}.tar.gz" "https://github.com/weewx/weewx/
     wget -nv -O "weewx-cmon.zip" "https://github.com/bellrichm/weewx-cmon/archive/refs/heads/master.zip" &&\
     wget -nv -O "weewx-xaggs.zip" "https://github.com/tkeffer/weewx-xaggs/archive/master.zip" &&\
     wget -nv -O "weewx-xcumulative.tar.gz" "https://github.com/gjr80/weewx-xcumulative/releases/download/v0.1.0/xcum-0.1.0.tar.gz" &&\
+    wget -nv -O "weewx-GTS.zip" "https://github.com/roe-dl/weewx-GTS/archive/master.zip" &&\
     tar xvfz "weewx-${WEEWX_VERSION}.tar.gz"
 
 RUN mkdir /tmp/weewx-wdc/ &&\
@@ -55,6 +56,7 @@ RUN bin/wee_extension --install /tmp/weewx-interceptor.zip &&\
     bin/wee_extension --install /tmp/weewx-cmon.zip &&\
     bin/wee_extension --install /tmp/weewx-xaggs.zip &&\
     bin/wee_extension --install /tmp/weewx-xcumulative.tar.gz &&\
+    bin/wee_extension --install /tmp/weewx-GTS.zip &&\
     bin/wee_extension --install /tmp/weewx-wdc/ &&\
     bin/wee_config --reconfigure --driver=user.interceptor --no-prompt &&\
     bin/wee_extension --list
