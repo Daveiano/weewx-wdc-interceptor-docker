@@ -1,4 +1,4 @@
-[![Test & Lint](https://github.com/Daveiano/weewx-wdc-interceptor-docker/actions/workflows/test.yml/badge.svg?branch=1.x)](https://github.com/Daveiano/weewx-wdc-interceptor-docker/actions/workflows/test.yml)
+[![Test & Lint](https://github.com/Daveiano/weewx-wdc-interceptor-docker/actions/workflows/test.yml/badge.svg)](https://github.com/Daveiano/weewx-wdc-interceptor-docker/actions/workflows/test.yml)
 
 # weewx-wdc-interceptor-docker
 
