@@ -1,18 +1,21 @@
-[![Test & Lint](https://github.com/Daveiano/weewx-wdc-interceptor-docker/actions/workflows/test.yml/badge.svg?branch=1.x)](https://github.com/Daveiano/weewx-wdc-interceptor-docker/actions/workflows/test.yml)
+[![Test & Lint](https://github.com/Daveiano/weewx-wdc-interceptor-docker/actions/workflows/test.yml/badge.svg)](https://github.com/Daveiano/weewx-wdc-interceptor-docker/actions/workflows/test.yml)
 
 # weewx-wdc-interceptor-docker
 
 A simple Dockerfile to run [weewx](https://github.com/weewx/weewx) with the [interceptor](https://github.com/matthewwall/weewx-interceptor) driver.
-The [weewx-forecast](https://github.com/chaunceygardiner/weewx-forecast/) extension is also installed along with [weewx-wdc](https://github.com/Daveiano/weewx-wdc)
-and [weewx-cmon](https://github.com/bellrichm/weewx-cmon). There are branches available with [weewx-DWD](https://github.com/roe-dl/weewx-DWD), [weewx-mqtt](https://github.com/matthewwall/weewx-mqtt), [weewx-xcumulative](https://github.com/gjr80/weewx-xcumulative) and [weewx-xaggs](https://github.com/tkeffer/weewx-xaggs).
+The [weewx-forecast](https://github.com/chaunceygardiner/weewx-forecast/) extension is also installed along with
+[weewx-wdc](https://github.com/Daveiano/weewx-wdc), [weewx-xcumulative](https://github.com/gjr80/weewx-xcumulative), [weewx-xaggs](https://github.com/tkeffer/weewx-xaggs)
+and [weewx-cmon](https://github.com/bellrichm/weewx-cmon). There are branches available with [weewx-DWD](https://github.com/roe-dl/weewx-DWD), [weewx-mqtt](https://github.com/matthewwall/weewx-mqtt).
+
+WeeWX is installed via the [`pip` installation method](https://www.weewx.com/docs/5.0/quickstarts/pip/).
 
 ## Usage
 
-* Make changes to src/install-input.txt and src/skin.conf
+* Make changes to the [`Dockerfile`s install command](https://github.com/Daveiano/weewx-wdc-interceptor-docker/blob/main/Dockerfile#L48) and `src/skin.conf`
 * Build `docker build . -t "weewx"`
   * Default build args:
-    * **ARG** WEEWX_VERSION="4.10.2"
-    * **ARG** WDC_VERSION="v3.4.0"
+    * **ARG** WEEWX_VERSION="5.0.2"
+    * **ARG** WDC_VERSION="v3.5.0-alpha2"
 * Run `docker run -d --restart unless-stopped -p 9877:9877 --name weewx weewx`
 * Step into with `docker exec -it weewx /bin/bash`
 
@@ -34,57 +37,6 @@ A simple docker-compose.yml is included which starts a nginx server on `localhos
 
 `docker compose up -d`
 
-
-### install-input.txt
-
-The template for the weewx install manager:
-
-| Value in txt                  | weewx Spec          |
-|-------------------------------|---------------------|
-| Haselbachtal, Saxony, Germany | Station description |
-| 250, meter                    | Altitude            |
-| 51.209                        | latitude            |
-| 14.085                        | longitude           |
-| y                             | Register station    |
-| https://www.weewx-hbt.de/     | Station Link        |
-| metric                        | unit display        |
-| 3 (is set to interceptor during installation) | Driver              |
-
-#### Here is the install output with the full dialogue:
-
-```
-Enter a brief description of the station, such as its location.  For example:
-Santa's Workshop, North Pole
-description [My Little Town, Oregon]:
-Specify altitude, with units 'foot' or 'meter'.  For example:
-35, foot
-12, meter
-altitude [700, foot]:
-Specify latitude in decimal degrees, negative for south.
-latitude [0.00]: Specify longitude in decimal degrees, negative for west.
-longitude [0.00]:
-You can register your station on weewx.com, where it will be included
-in a map. You will need a unique URL to identify your station (such as a
-website, or WeatherUnderground link).
-Include station in the station registry (y/n)? [n]: Unique URL: [http://acme.com]:
-Indicate the preferred units for display: ['us', 'metric', 'metricwx']
-unit system [us]:
-Installed drivers include:
-  0) AcuRite         (weewx.drivers.acurite)
-  1) CC3000          (weewx.drivers.cc3000)
-  2) FineOffsetUSB   (weewx.drivers.fousb)
-  3) Simulator       (weewx.drivers.simulator)
-  4) TE923           (weewx.drivers.te923)
-  5) Ultimeter       (weewx.drivers.ultimeter)
-  6) Vantage         (weewx.drivers.vantage)
-  7) WMR100          (weewx.drivers.wmr100)
-  8) WMR300          (weewx.drivers.wmr300)
-  9) WMR9x8          (weewx.drivers.wmr9x8)
- 10) WS1             (weewx.drivers.ws1)
- 11) WS23xx          (weewx.drivers.ws23xx)
- 12) WS28xx          (weewx.drivers.ws28xx)
-choose a driver [3]:
-```
 
 ### [Weather Data Center Skin](https://github.com/Daveiano/weewx-wdc) or any other skin
 

@@ -2,21 +2,21 @@ FROM python:3.10-buster
 
 LABEL org.opencontainers.image.authors="David Baetge <david.baetge@gmail.com>"
 
-ARG WEEWX_VERSION="4.10.2"
+ARG WEEWX_VERSION="5.0.2"
 ARG WDC_VERSION="v3.4.0"
 ARG WEEWX_UID=2749
-ENV WEEWX_HOME="/home/weewx"
+ENV WEEWX_HOME="/home/weewx-data"
 
 EXPOSE 9877
 
-COPY src/install-input.txt /tmp/
 COPY src/start.sh /start.sh
 COPY src/extensions.py /tmp
 RUN chmod +x /start.sh
 
 # @see https://blog.nuvotex.de/running-syslog-in-a-container/
+# @todo https://www.weewx.com/docs/5.0/usersguide/monitoring/#logging-on-macos
 RUN apt-get update &&\
-    apt-get install -q -y --no-install-recommends rsyslog=8.1901.0-1+deb10u2 python3-paho-mqtt=1.4.0-1 &&\
+    apt-get install -q -y --no-install-recommends rsyslog=8.1901.0-1+deb10u2 python3-pip=18.1-5 python3-venv=3.7.3-1 python3-paho-mqtt=1.4.0-1 &&\
     apt-get clean &&\
     rm -rf /var/lib/apt/lists/*
 
@@ -28,38 +28,48 @@ RUN ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
 
 WORKDIR /tmp
 
-RUN wget -nv -O "weewx-${WEEWX_VERSION}.tar.gz" "https://github.com/weewx/weewx/archive/refs/tags/v${WEEWX_VERSION}.tar.gz" &&\
-    wget -nv -O "weewx-interceptor.zip" "https://github.com/matthewwall/weewx-interceptor/archive/master.zip" &&\
+RUN wget -nv -O "weewx-interceptor.zip" "https://github.com/matthewwall/weewx-interceptor/archive/master.zip" &&\
     wget -nv -O "weewx-wdc-${WDC_VERSION}.zip" "https://github.com/Daveiano/weewx-wdc/releases/download/${WDC_VERSION}/weewx-wdc-${WDC_VERSION}.zip" &&\
     wget -nv -O "weewx-forecast.zip" "https://github.com/chaunceygardiner/weewx-forecast/archive/refs/heads/master.zip" &&\
-    wget -nv -O "weewx-mqtt.zip" https://github.com/matthewwall/weewx-mqtt/archive/master.zip &&\
+    wget -nv -O "weewx-mqtt.zip" "https://github.com/matthewwall/weewx-mqtt/archive/master.zip" &&\
     wget -nv -O "weewx-cmon.zip" "https://github.com/bellrichm/weewx-cmon/archive/refs/heads/master.zip" &&\
     wget -nv -O "weewx-xaggs.zip" "https://github.com/tkeffer/weewx-xaggs/archive/master.zip" &&\
     wget -nv -O "weewx-xcumulative.tar.gz" "https://github.com/gjr80/weewx-xcumulative/releases/download/v0.1.0/xcum-0.1.0.tar.gz" &&\
-    wget -nv -O "weewx-GTS.zip" "https://github.com/roe-dl/weewx-GTS/archive/master.zip" &&\
-    tar xvfz "weewx-${WEEWX_VERSION}.tar.gz"
+    wget -nv -O "weewx-GTS.zip" "https://github.com/roe-dl/weewx-GTS/archive/master.zip"
 
 RUN mkdir /tmp/weewx-wdc/ &&\
     unzip /tmp/weewx-wdc-${WDC_VERSION}.zip -d /tmp/weewx-wdc/
 
-WORKDIR /tmp/weewx-${WEEWX_VERSION}
-
-RUN pip install --no-cache-dir -r ./requirements.txt &&\
-    pip install --no-cache-dir paho-mqtt==1.6.1 &&\
-    python ./setup.py build && python ./setup.py install < /tmp/install-input.txt
-
 WORKDIR ${WEEWX_HOME}
 
-RUN bin/wee_extension --install /tmp/weewx-interceptor.zip &&\
-    bin/wee_extension --install /tmp/weewx-forecast.zip &&\
-    bin/wee_extension --install /tmp/weewx-mqtt.zip &&\
-    bin/wee_extension --install /tmp/weewx-cmon.zip &&\
-    bin/wee_extension --install /tmp/weewx-xaggs.zip &&\
-    bin/wee_extension --install /tmp/weewx-xcumulative.tar.gz &&\
-    bin/wee_extension --install /tmp/weewx-GTS.zip &&\
-    bin/wee_extension --install /tmp/weewx-wdc/ &&\
-    bin/wee_config --reconfigure --driver=user.interceptor --no-prompt &&\
-    bin/wee_extension --list
+RUN python3 -m venv ${WEEWX_HOME}/weewx-venv &&\
+    . ${WEEWX_HOME}/weewx-venv/bin/activate &&\
+    python3 -m pip install --no-cache-dir paho-mqtt==1.6.1 weewx==${WEEWX_VERSION}
+
+RUN . ${WEEWX_HOME}/weewx-venv/bin/activate &&\
+    weectl station create "${WEEWX_HOME}" --no-prompt \
+        --driver=weewx.drivers.simulator \
+        --altitude="250,meter" \
+        --latitude=51.209 \
+        --longitude=14.085 \
+        --location="Haselbachtal, Saxony, Germany" \
+        --register="y" \
+        --station-url="https://www.weewx-hbt.de/" \
+        --units="metric"
+
+RUN . ${WEEWX_HOME}/weewx-venv/bin/activate &&\
+    weectl extension install -y --config "${WEEWX_HOME}/weewx.conf" /tmp/weewx-interceptor.zip &&\
+    weectl extension install -y --config "${WEEWX_HOME}/weewx.conf" /tmp/weewx-forecast.zip &&\
+    weectl extension install -y --config "${WEEWX_HOME}/weewx.conf" /tmp/weewx-cmon.zip &&\
+    weectl extension install -y --config "${WEEWX_HOME}/weewx.conf" /tmp/weewx-xaggs.zip &&\
+    weectl extension install -y --config "${WEEWX_HOME}/weewx.conf" /tmp/weewx-xcumulative.tar.gz &&\
+    weectl extension install -y --config "${WEEWX_HOME}/weewx.conf" /tmp/weewx-GTS.zip &&\
+    weectl extension install -y --config "${WEEWX_HOME}/weewx.conf" /tmp/weewx-wdc/ &&\
+    weectl extension install -y --config "${WEEWX_HOME}/weewx.conf" /tmp/weewx-mqtt.zip
+
+RUN . ${WEEWX_HOME}/weewx-venv/bin/activate &&\
+    weectl extension list --config "${WEEWX_HOME}/weewx.conf" &&\
+    weectl station reconfigure --weewx-root "${WEEWX_HOME}" --config "${WEEWX_HOME}/weewx.conf" --driver=user.interceptor --no-prompt
 
 COPY src/skin.conf ./skins/weewx-wdc/
 
