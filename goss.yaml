@@ -25,7 +25,7 @@ port:
     - 0.0.0.0
 
 file:
-  /home/weewx/weewx.conf:
+  /home/weewx-data/weewx.conf:
     exists: true
     contains:
       - /device_type = ecowitt-client/
@@ -34,7 +34,7 @@ file:
       - /WdcReport/
       - /skin = weewx-wdc/
 
-  /home/weewx/bin/user/extensions.py:
+  /home/weewx-data/bin/user/extensions.py:
     exists: true
     contains:
       - /import weewx.units/
