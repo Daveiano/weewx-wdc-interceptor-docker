@@ -1,5 +1,7 @@
 #!/bin/bash
 
+echo "WEEWX_HOME: ${WEEWX_HOME}"
+
 # start rsyslog
 echo 'Starting rsyslog'
 # remove lingering pid file
@@ -17,4 +19,7 @@ mkdir /home/weewx/skins/weewx-wdc/dwd
 
 # start weewx
 echo 'Starting weewx'
-"${WEEWX_HOME}"/bin/weewxd
+
+# shellcheck source=/dev/null
+. "${WEEWX_HOME}"/weewx-venv/bin/activate
+weewxd --config "${WEEWX_HOME}/weewx.conf"

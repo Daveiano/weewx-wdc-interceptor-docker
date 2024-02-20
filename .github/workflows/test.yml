@@ -8,14 +8,14 @@ jobs:
     name: Shellcheck
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Run ShellCheck
       uses: ludeeus/action-shellcheck@master
   hadolint:
     name: hadolint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Run hadolint
         uses: hadolint/hadolint-action@v2.0.0
         with:
@@ -25,8 +25,8 @@ jobs:
     name: dgoss
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: e1himself/goss-installation-action@v1.1.0
+      - uses: actions/checkout@v4
+      - uses: e1himself/goss-installation-action@v1.2.1
         with:
           version: 'v0.3.16'
       - run: docker build . -t "weewx"
