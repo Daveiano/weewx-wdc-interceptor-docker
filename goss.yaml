@@ -28,7 +28,7 @@ port:
     - 0.0.0.0
 
 file:
-  /home/weewx/weewx.conf:
+  /home/weewx-data/weewx.conf:
     exists: true
     contains:
       - /device_type = ecowitt-client/
@@ -40,13 +40,18 @@ file:
       - /dwd_binding/
       - /dwd_sqlite/
 
-  /home/weewx/bin/schemas/dwd.py:
+  /home/weewx-data/weewx-venv/lib/python3.10/site-packages/schemas//dwd.py:
     exists: true
     contains:
       - /dateTime/
 
-  /home/weewx/bin/user/extensions.py:
+  /home/weewx-data/bin/user/extensions.py:
     exists: true
     contains:
       - /import weewx.units/
       - /weewx.units.obs_group_dict\[\'proc_active\'\] = \'group_count\'/
+
+  /usr/local/bin/dwd-warnings:
+    exists: true
+    contains:
+      - /configobj.ConfigObj\(\"\/home\/weewx-data\/weewx.conf\"\)/
