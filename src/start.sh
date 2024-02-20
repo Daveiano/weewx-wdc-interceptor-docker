@@ -11,11 +11,11 @@ service rsyslog start
 service cron start
 
 # Initial weewx-DWD run.
-mkdir /home/weewx/skins/weewx-wdc/dwd
+mkdir "${WEEWX_HOME}/skins/weewx-wdc/dwd"
 /usr/local/bin/wget-dwd
 /usr/local/bin/dwd-warnings
-/usr/local/bin/dwd-cap-warnings --config=/home/weewx/weewx.conf --resolution=city
-/usr/local/bin/dwd-mosmix --config=/home/weewx/weewx.conf --daily --hourly --json --database O461
+/usr/local/bin/dwd-cap-warnings --config="${WEEWX_HOME}/weewx.conf" --resolution=city
+/usr/local/bin/dwd-mosmix --config="${WEEWX_HOME}/weewx.conf" --daily --hourly --json --database O461
 
 # start weewx
 echo 'Starting weewx'
