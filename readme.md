@@ -28,7 +28,7 @@ Logs are in /var/log/syslog.
 ```
 docker volume create weewx-db
 docker volume create weewx-html
-docker run -d --restart unless-stopped -p 9877:9877 --name weewx -v weewx-db:/home/weewx/archive -v weewx-html:/home/weewx/public_html weewx
+docker run -d --restart unless-stopped -p 9877:9877 --name weewx -v weewx-db:/home/weewx-data/archive -v weewx-html:/home/weewx-data/public_html weewx
 ```
 
 Run nginx with weewx generated files: `docker run -it --rm -d -p 8080:80 --name web -v weewx-html:/usr/share/nginx/html nginx`
