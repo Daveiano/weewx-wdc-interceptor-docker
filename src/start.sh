@@ -11,6 +11,7 @@ service rsyslog start
 service cron start
 
 # Initial weewx-DWD run.
+# TODO: Only on first start.
 mkdir "${WEEWX_HOME}/skins/weewx-wdc/dwd"
 /usr/local/bin/wget-dwd
 /usr/local/bin/dwd-warnings
