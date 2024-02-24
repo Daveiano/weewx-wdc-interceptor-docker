@@ -17,7 +17,7 @@ WeeWX is installed via the [`pip` installation method](https://www.weewx.com/doc
 * Build `docker build . -t "weewx"`
   * Default build args:
     * **ARG** WEEWX_VERSION="5.0.2"
-    * **ARG** WDC_VERSION="v3.5.0-alpha2"
+    * **ARG** WDC_VERSION="v3.5.0"
 * Run `docker run -d --restart unless-stopped -p 9877:9877 --name weewx weewx`
 * Step into with `docker exec -it weewx /bin/bash`
 
