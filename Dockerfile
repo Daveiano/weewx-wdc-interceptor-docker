@@ -99,6 +99,8 @@ RUN . ${WEEWX_HOME}/weewx-venv/bin/activate &&\
     weectl extension list --config "${WEEWX_HOME}/weewx.conf" &&\
     weectl station reconfigure --weewx-root "${WEEWX_HOME}" --config "${WEEWX_HOME}/weewx.conf" --driver=user.interceptor --no-prompt
 
+USER root
+
 COPY src/skin.conf ./skins/weewx-wdc/
 COPY src/dwd.py ./weewx-venv/lib/python3.10/site-packages/schemas/
 
@@ -114,8 +116,10 @@ RUN sed -i -e 's/device_type = acurite-bridge/device_type = ecowitt-client\n    
 # weewx-mqtt.
 RUN sed -i -z -e 's|INSERT_SERVER_URL_HERE|mqtt://user:password@host:port\n        topic = weather\n        unit_system = METRIC\n        binding = loop\n        [[[inputs]]]\n            [[[[windSpeed]]]]\n                format = %.0f\n            [[[[windGust]]]]\n                format = %.0f|g' weewx.conf
 
+RUN chown -R weewx:weewx ${WEEWX_HOME}
 
 VOLUME [ "${WEEWX_HOME}/public_html" ]
 VOLUME [ "${WEEWX_HOME}/archive" ]
 
+USER weewx
 ENTRYPOINT [ "/start.sh" ]
