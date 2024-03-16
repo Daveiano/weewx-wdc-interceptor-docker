@@ -17,12 +17,15 @@ RUN chmod +x /start.sh
 # @see https://blog.nuvotex.de/running-syslog-in-a-container/
 # @todo https://www.weewx.com/docs/5.0/usersguide/monitoring/#logging-on-macos
 RUN apt-get update &&\
-    apt-get install -q -y --no-install-recommends rsyslog=8.1901.0-1+deb10u2 python3-pip=18.1-5 python3-venv=3.7.3-1 cron=3.0pl1-134+deb10u1 python3-configobj=5.0.6-3 python3-requests=2.21.0-1 python3-paho-mqtt=1.4.0-1 &&\
+    apt-get install -q -y --no-install-recommends sudo=1.8.27-1+deb10u6 rsyslog=8.1901.0-1+deb10u2 python3-pip=18.1-5 python3-venv=3.7.3-1 cron=3.0pl1-134+deb10u1 python3-configobj=5.0.6-3 python3-requests=2.21.0-1 python3-paho-mqtt=1.4.0-1 &&\
     apt-get clean &&\
     rm -rf /var/lib/apt/lists/*
 
 RUN addgroup --system --gid ${WEEWX_UID} weewx &&\
     adduser --system --uid ${WEEWX_UID} --ingroup weewx weewx
+
+RUN usermod -aG sudo weewx &&\
+    echo "weewx ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 # Configure timezone.
 RUN ln -sf /usr/share/zoneinfo/Europe/Berlin /etc/localtime
@@ -62,6 +65,10 @@ RUN wget -nv -O "icons-dwd.zip" "https://www.dwd.de/DE/wetter/warnungen_aktuell/
     unzip /tmp/warnicons-dwd.zip -d ${WEEWX_HOME}/public_html/dwd/warn_icons
 
 WORKDIR ${WEEWX_HOME}
+
+RUN chown -R weewx:weewx ${WEEWX_HOME}
+
+USER weewx
 
 RUN python3 -m venv ${WEEWX_HOME}/weewx-venv &&\
     . ${WEEWX_HOME}/weewx-venv/bin/activate &&\
