@@ -114,7 +114,10 @@ RUN sed -i -e 's/device_type = acurite-bridge/device_type = ecowitt-client\n    
 # weewx-mqtt.
 RUN sed -i -z -e 's|INSERT_SERVER_URL_HERE|mqtt://user:password@host:port\n        topic = weather\n        unit_system = METRIC\n        binding = loop\n        [[[inputs]]]\n            [[[[windSpeed]]]]\n                format = %.0f\n            [[[[windGust]]]]\n                format = %.0f|g' weewx.conf
 
-RUN sudo chown -R weewx:weewx ${WEEWX_HOME}
+USER root
+RUN chown -R weewx:weewx ${WEEWX_HOME}
+
+USER weewx
 
 VOLUME [ "${WEEWX_HOME}/public_html" ]
 VOLUME [ "${WEEWX_HOME}/archive" ]
