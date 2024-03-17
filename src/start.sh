@@ -1,6 +1,7 @@
 #!/bin/bash
 
 echo "WEEWX_HOME: ${WEEWX_HOME}"
+sudo chown -R weewx:weewx "${WEEWX_HOME}"
 
 # start rsyslog
 echo 'Starting rsyslog'
@@ -11,11 +12,11 @@ sudo service rsyslog start
 sudo service cron start
 
 # Initial weewx-DWD run.
-sudo mkdir "${WEEWX_HOME}/skins/weewx-wdc/dwd"
-sudo /usr/local/bin/wget-dwd
-sudo /usr/local/bin/dwd-warnings
-sudo /usr/local/bin/dwd-cap-warnings --config="${WEEWX_HOME}/weewx.conf" --resolution=city
-sudo /usr/local/bin/dwd-mosmix --config="${WEEWX_HOME}/weewx.conf" --daily --hourly --json --database O461
+mkdir "${WEEWX_HOME}/skins/weewx-wdc/dwd"
+/usr/local/bin/wget-dwd
+/usr/local/bin/dwd-warnings
+/usr/local/bin/dwd-cap-warnings --config="${WEEWX_HOME}/weewx.conf" --resolution=city
+/usr/local/bin/dwd-mosmix --config="${WEEWX_HOME}/weewx.conf" --daily --hourly --json --database O461
 
 # start weewx
 echo 'Starting weewx'
