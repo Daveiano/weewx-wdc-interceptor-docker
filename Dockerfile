@@ -5,7 +5,7 @@ LABEL org.opencontainers.image.authors="David Baetge <david.baetge@gmail.com>"
 ARG WEEWX_VERSION="5.0.2"
 ARG WDC_VERSION="v3.5.0"
 ARG WEEWX_UID=2749
-ENV WEEWX_HOME="/home/weewx-data"
+ENV WEEWX_HOME="/home/weewx/weewx-data"
 
 EXPOSE 9877
 

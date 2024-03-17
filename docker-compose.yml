@@ -6,8 +6,8 @@ services:
     ports:
       - 9877:9877
     volumes:
-      - weewx-db:/home/weewx-data/archive
-      - weewx-html:/home/weewx-data/public_html
+      - weewx-db:/home/weewx/weewx-data/archive
+      - weewx-html:/home/weewx/weewx-data/public_html
     restart: unless-stopped
   weewx-web:
     image: nginx:latest
