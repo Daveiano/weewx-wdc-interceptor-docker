@@ -44,7 +44,7 @@ WORKDIR ${WEEWX_HOME}
 
 RUN python3 -m venv ${WEEWX_HOME}/weewx-venv &&\
     . ${WEEWX_HOME}/weewx-venv/bin/activate &&\
-    python3 -m pip install --no-cache-dir paho-mqtt==1.6.1 weewx==${WEEWX_VERSION}
+    python3 -m pip install --no-cache-dir paho-mqtt==1.6.1 weewx==${WEEWX_VERSION} six==1.16.0
 
 RUN . ${WEEWX_HOME}/weewx-venv/bin/activate &&\
     weectl station create "${WEEWX_HOME}" --no-prompt \
